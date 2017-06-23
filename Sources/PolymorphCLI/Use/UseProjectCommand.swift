@@ -29,6 +29,34 @@ public class UseProjectCommand: Command {
     }()
 
     public func run(_ arguments: [String : Any]) throws {
-        print("USE \(arguments)")
+
+        print("hello:")
+
+        let cla = CommandLineArgs()
+        cla.root(command: ExitCommand())
+        cla.root(command: UpdateProjectCommand())
+
+        while let str = readLine() {
+            do {
+                let task = try cla.build(str.arguments())
+                if let help = task.arguments[PolymorphCommand.Keys.help] as? Bool, help == true {
+                    print(task.help())
+                } else {
+                    do {
+                        try task.exec()
+                    } catch CommandLineError.unimplementedCommand {
+                        print(task.help())
+                    }
+                }
+            } catch CommandLineError.missingRequiredArgument(let node) {
+                print("[!] Missing required parameter\n")
+                print(node.help())
+            } catch CommandLineError.commandNotFound {
+                print("[!] Command not found\n")
+                print(cla.help())
+            } catch {
+                print("[!] Unexpected error occured: \(error)")
+            }
+        }
     }
 }
