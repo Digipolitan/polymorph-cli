@@ -10,21 +10,40 @@ import CommandLineArgs
 
 public class InitProjectCommand: Command {
 
+    public enum Keys {
+        public static let package: String = "package"
+        public static let copyright: String = "copyright"
+        public static let author: String = "author"
+        public static let documentation: String = "documentation"
+        public static let file: String = "file"
+        public static let name: String = "name"
+    }
+
+    public enum Options {
+        public static let package = OptionDefinition(name: Keys.package, type: .string, alias: "p", isRequired: true, documentation: "The project main package")
+        public static let copyright = OptionDefinition(name: Keys.copyright, type: .string, alias: "c", documentation: "Your company copyright")
+        public static let author = OptionDefinition(name: Keys.author, type: .string, alias: "a", documentation: "The author of all generated files")
+        public static let documentation = OptionDefinition(name: Keys.documentation, type: .string, alias: "d", documentation: "Project information")
+        public static let file = OptionDefinition(name: Keys.file, type: .string, alias: "f", documentation: "The json file that will contains all project information")
+        public static let name = OptionDefinition(name: Keys.name, type: .string, documentation: "The project name")
+    }
+
+    public enum Consts {
+        public static let name: String = "init"
+    }
+
     public lazy var definition: CommandDefinition = {
-        var options: [OptionDefinition] = []
-        options.append(OptionDefinition(name: "package", type: .string, alias: "p", isRequired: true, documentation: "The project main package"))
-        options.append(OptionDefinition(name: "copyright", type: .string, alias: "c", documentation: "Your company copyright"))
-        options.append(OptionDefinition(name: "author", type: .string, alias: "a", documentation: "The author of all generated files"))
-        options.append(OptionDefinition(name: "documentation", type: .string, alias: "d", documentation: "Project information"))
-        options.append(OptionDefinition(name: "file", type: .string, alias: "f", defaultValue: "polymorph.json", documentation: "The json file that will contains all project information"))
-
-        let mainOption = OptionDefinition(name: "name", type: .string, documentation: "The project name")
-
-        return CommandDefinition(name: "init", definitions: options, main: mainOption, documentation: "The project started")
+        return CommandDefinition(name: Consts.name, options: [
+            Options.package,
+            Options.file,
+            Options.author,
+            Options.copyright,
+            Options.documentation,
+            PolymorphCommand.Options.help
+            ], main: Options.name, documentation: "The project starter")
     }()
 
     public func run(_ arguments: [String : Any]) throws {
         print("INIT \(arguments)")
-
     }
 }

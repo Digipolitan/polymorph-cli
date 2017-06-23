@@ -10,10 +10,22 @@ import CommandLineArgs
 
 public class UseProjectCommand: Command {
 
-    public lazy var definition: CommandDefinition = {
-        let mainOption = OptionDefinition(name: "file", type: .string, alias: "f", defaultValue: "polymorph.json", documentation: "The json file that will contains all project information")
+    public enum Keys {
+        public static let file: String = "file"
+    }
 
-        return CommandDefinition(name: "use", definitions: [OptionDefinition(name: "help", type: .boolean, documentation: "Display this help")], main: mainOption, documentation: "Select the project to edit")
+    public enum Options {
+        public static let file = OptionDefinition(name: Keys.file, type: .string, alias: "f", defaultValue: "polymorph.json", documentation: "The project file to remove")
+    }
+
+    public enum Consts {
+        public static let name: String = "use"
+    }
+
+    public lazy var definition: CommandDefinition = {
+        return CommandDefinition(name: Consts.name, options: [
+            PolymorphCommand.Options.help
+            ], main: Options.file, documentation: "Select the project to edit")
     }()
 
     public func run(_ arguments: [String : Any]) throws {

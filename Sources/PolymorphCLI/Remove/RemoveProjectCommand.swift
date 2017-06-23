@@ -10,15 +10,24 @@ import CommandLineArgs
 
 public class RemoveProjectCommand: Command {
 
-    public lazy var definition: CommandDefinition = {
-        let mainOption = OptionDefinition(name: "file", type: .string, alias: "f", defaultValue: "polymorph.json", documentation: "The project file to remove")
+    public enum Keys {
+        public static let file: String = "file"
+    }
 
-        return CommandDefinition(name: "rm", main: mainOption, documentation: "Delete the polymorph project")
+    public enum Options {
+        public static let file = OptionDefinition(name: Keys.file, type: .string, alias: "f", defaultValue: "polymorph.json", documentation: "The project file to remove")
+    }
+
+    public enum Consts {
+        public static let name: String = "rm"
+    }
+
+    public lazy var definition: CommandDefinition = {
+        return CommandDefinition(name: Consts.name, options: [PolymorphCommand.Options.help], main: Options.file, documentation: "Delete the polymorph project")
     }()
 
     public func run(_ arguments: [String : Any]) throws {
         print("RM \(arguments)")
-
     }
 }
 
