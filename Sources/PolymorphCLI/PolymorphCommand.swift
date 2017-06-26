@@ -25,7 +25,7 @@ public class PolymorphCommand: Command {
     }
 
     public lazy var definition: CommandDefinition = {
-        return CommandDefinition(name: Consts.name, options: [Options.file, Options.help], documentation: "Command line tools to generate source code files")
+        return CommandDefinition(name: Consts.name, options: [Options.help], documentation: "Command line tools to generate source code files")
     }()
 
     public func run(_ arguments: [String : Any]) throws {

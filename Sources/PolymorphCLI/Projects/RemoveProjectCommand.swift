@@ -19,10 +19,11 @@ public class RemoveProjectCommand: Command {
     }()
 
     public func run(_ arguments: [String : Any]) throws {
-        if let file = arguments[PolymorphCommand.Keys.file] as? String {
-            _ = try ProjectStorage.open(at: file)
-            try ProjectStorage.fileManager.removeItem(atPath: file)
+        guard let file = arguments[PolymorphCommand.Keys.file] as? String else {
+            return
         }
+        _ = try ProjectStorage.open(at: file)
+        try ProjectStorage.fileManager.removeItem(atPath: file)
     }
 }
 

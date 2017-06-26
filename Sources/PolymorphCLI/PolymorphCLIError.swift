@@ -14,4 +14,8 @@ public enum PolymorphCLIError: Error {
 
     case classExists(name: String)
     case classNotFound(name: String)
+
+    case objectNotFound(name: String)
+
+    case propertyExists(name: String)
 }

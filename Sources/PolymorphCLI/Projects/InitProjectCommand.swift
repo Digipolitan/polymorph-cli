@@ -46,30 +46,30 @@ public class InitProjectCommand: Command {
     }()
 
     public func run(_ arguments: [String : Any]) throws {
-        if let file = arguments[PolymorphCommand.Keys.file] as? String {
-            if ProjectStorage.fileManager.fileExists(atPath: file) {
-                throw PolymorphCLIError.fileExistsAt(path: file)
-            }
-            if let name = arguments[Keys.name] as? String,
-                let package = arguments[Keys.package] as? String {
-
-                let project = Project(name: name, package: try Package(string: package))
-
-                if let author = arguments[Keys.author] as? String {
-                    project.author = author
-                }
-                if let copyright = arguments[Keys.copyright] as? String {
-                    project.copyright = copyright
-                }
-                if let version = arguments[Keys.version] as? String {
-                    project.version = version
-                }
-                if let documentation = arguments[Keys.documentation] as? String {
-                    project.documentation = documentation
-                }
-
-                try ProjectStorage.save(project: project, at: file)
-            }
+        guard
+        let file = arguments[PolymorphCommand.Keys.file] as? String,
+        let name = arguments[Keys.name] as? String,
+        let package = arguments[Keys.package] as? String else {
+            return
         }
+        guard !ProjectStorage.fileManager.fileExists(atPath: file) else {
+            throw PolymorphCLIError.fileExistsAt(path: file)
+        }
+        let project = Project(name: name, package: try Package(string: package))
+
+        if let author = arguments[Keys.author] as? String {
+            project.author = author
+        }
+        if let copyright = arguments[Keys.copyright] as? String {
+            project.copyright = copyright
+        }
+        if let version = arguments[Keys.version] as? String {
+            project.version = version
+        }
+        if let documentation = arguments[Keys.documentation] as? String {
+            project.documentation = documentation
+        }
+
+        try ProjectStorage.save(project: project, at: file)
     }
 }

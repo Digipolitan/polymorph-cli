@@ -38,21 +38,23 @@ public class ListClassCommand: Command {
     }()
 
     public func run(_ arguments: [String : Any]) throws {
-        if let file = arguments[PolymorphCommand.Keys.file] as? String,
-            let verbose = arguments[Keys.verbose] as? Bool {
-            let project = try ProjectStorage.open(at: file)
+        guard
+        let file = arguments[PolymorphCommand.Keys.file] as? String,
+        let verbose = arguments[Keys.verbose] as? Bool else {
+            return
+        }
+        let project = try ProjectStorage.open(at: file)
 
-            if let search = arguments[Keys.search] as? String {
-                print(try project.models.searchClasses(matching: search).map { try help(of: $0, from: project, verbose: verbose) }.joined(separator: "\n\n"))
-            } else if let using = arguments[Keys.using] as? String {
-                if let type = project.models.findClass(name: using) {
-                    print(try project.models.searchClasses(linkedTo: type.id).map { try help(of: $0, from: project, verbose: verbose) }.joined(separator: "\n\n"))
-                } else {
-                    throw PolymorphCLIError.classNotFound(name: using)
-                }
+        if let search = arguments[Keys.search] as? String {
+            print(try project.models.searchClasses(matching: search).map { try help(of: $0, from: project, verbose: verbose) }.joined(separator: "\n\n"))
+        } else if let using = arguments[Keys.using] as? String {
+            if let type = project.models.findClass(name: using) {
+                print(try project.models.searchClasses(linkedTo: type.id).map { try help(of: $0, from: project, verbose: verbose) }.joined(separator: "\n\n"))
             } else {
-                print(try project.models.classes.map { try help(of: $0, from: project, verbose: verbose) }.joined(separator: "\n"))
+                throw PolymorphCLIError.classNotFound(name: using)
             }
+        } else {
+            print(try project.models.classes.map { try help(of: $0, from: project, verbose: verbose) }.joined(separator: "\n"))
         }
     }
 
@@ -103,7 +105,7 @@ public class ListClassCommand: Command {
             str += "<\(generics.map { project.models.findObject(uuid: $0)?.name ?? "#" }.joined(separator: ", "))>"
         }
 
-        if !property.isNonnul {
+        if !property.isNonnull {
             str += "?"
         }
 

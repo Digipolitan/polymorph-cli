@@ -46,27 +46,28 @@ public class UpdateProjectCommand: Command {
     }()
 
     public func run(_ arguments: [String : Any]) throws {
-        if let file = arguments[PolymorphCommand.Keys.file] as? String {
-            let project = try ProjectStorage.open(at: file)
-            if let name = arguments[Keys.name] as? String {
-                project.name = name
-            }
-            if let package = arguments[Keys.package] as? String {
-                project.package = try Package(string: package)
-            }
-            if let author = arguments[Keys.author] as? String {
-                project.author = author
-            }
-            if let copyright = arguments[Keys.copyright] as? String {
-                project.copyright = copyright
-            }
-            if let version = arguments[Keys.version] as? String {
-                project.version = version
-            }
-            if let documentation = arguments[Keys.documentation] as? String {
-                project.documentation = documentation
-            }
-            try ProjectStorage.save(project: project, at: file)
+        guard let file = arguments[PolymorphCommand.Keys.file] as? String else {
+            return
         }
+        let project = try ProjectStorage.open(at: file)
+        if let name = arguments[Keys.name] as? String {
+            project.name = name
+        }
+        if let package = arguments[Keys.package] as? String {
+            project.package = try Package(string: package)
+        }
+        if let author = arguments[Keys.author] as? String {
+            project.author = author
+        }
+        if let copyright = arguments[Keys.copyright] as? String {
+            project.copyright = copyright
+        }
+        if let version = arguments[Keys.version] as? String {
+            project.version = version
+        }
+        if let documentation = arguments[Keys.documentation] as? String {
+            project.documentation = documentation
+        }
+        try ProjectStorage.save(project: project, at: file)
     }
 }

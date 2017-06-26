@@ -13,6 +13,9 @@ polymorph.add(child: RemoveProjectCommand())
 let classCommands = polymorph.add(child: ClassCommand())
 classCommands.add(child: NewClassCommand())
 classCommands.add(child: ListClassCommand())
+classCommands.add(child: UpdateClassCommand())
+let propertyCommands = classCommands.add(child: ClassPropertyCommand())
+propertyCommands.add(child: ClassNewPropertyCommand())
 
 polymorph.add(child: BuildProjectCommand())
 
