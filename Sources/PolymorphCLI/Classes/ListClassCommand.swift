@@ -62,7 +62,7 @@ public class ListClassCommand: Command {
         var part: [String] = []
 
         var parents: [String] = []
-        var str = try c.canonicalName(from: project)
+        var str = c.canonicalName ?? c.name
         if let extends = c.extends {
             if let parent = project.models.findObject(uuid: extends) as? Class {
                 parents.append(parent.name)

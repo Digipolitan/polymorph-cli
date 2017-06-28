@@ -26,7 +26,7 @@ public class UpdateProjectCommand: Command {
         public static let version = OptionDefinition(name: Keys.version, type: .string, alias: "v", documentation: "The project version")
         public static let author = OptionDefinition(name: Keys.author, type: .string, alias: "a", documentation: "The author of all generated files")
         public static let documentation = OptionDefinition(name: Keys.documentation, type: .string, alias: "d", documentation: "Project information")
-        public static let name = OptionDefinition(name: Keys.name, type: .string, documentation: "The project name")
+        public static let name = OptionDefinition(name: Keys.name, type: .string, alias: "n", documentation: "The project name")
     }
 
     public enum Consts {
@@ -35,6 +35,7 @@ public class UpdateProjectCommand: Command {
 
     public lazy var definition: CommandDefinition = {
         return CommandDefinition(name: Consts.name, options: [
+            Options.name,
             Options.package,
             PolymorphCommand.Options.file,
             Options.author,
@@ -42,7 +43,7 @@ public class UpdateProjectCommand: Command {
             Options.version,
             Options.documentation,
             PolymorphCommand.Options.help
-            ], main: Options.name, documentation: "Update polymorph project info")
+            ], documentation: "Update polymorph project info")
     }()
 
     public func run(_ arguments: [String : Any]) throws {
