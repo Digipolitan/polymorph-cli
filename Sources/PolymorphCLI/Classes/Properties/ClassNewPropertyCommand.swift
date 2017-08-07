@@ -29,7 +29,7 @@ public class ClassNewPropertyCommand: Command {
         public static let genericTypes = OptionDefinition(name: Keys.genericTypes, type: .string, alias: "gts",  isMultiple: true, documentation: "List of generic types")
         public static let nonnull = OptionDefinition(name: Keys.nonnull, type: .boolean, alias: "nn", defaultValue: false, documentation: "Mark the property nonnull")
         public static let primary = OptionDefinition(name: Keys.primary, type: .boolean, alias: "p", defaultValue: false, documentation: "Mark the property primary")
-        public static let transient = OptionDefinition(name: Keys.transient, type: .boolean, alias: "ts", defaultValue: false, documentation: "Mark the property transient")
+        public static let transient = OptionDefinition(name: Keys.transient, type: .boolean, defaultValue: false, documentation: "Mark the property transient")
         public static let documentation = OptionDefinition(name: Keys.documentation, type: .string, alias: "d", documentation: "Description of the given property")
     }
 

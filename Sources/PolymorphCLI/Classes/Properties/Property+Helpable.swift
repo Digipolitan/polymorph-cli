@@ -12,6 +12,27 @@ import PolymorphCore
 extension Property: Helpable {
 
     public func help() -> String {
-        return ""
+        var str = self.isTransient ? "transient " : ""
+        str += self.name
+        
+        if let type = self.project?.models.findObject(uuid: self.type) {
+            str += " \(type.name)"
+        } else {
+            str += " #"
+        }
+
+        if let generics = self.genericTypes {
+            str += "<\(generics.map { self.project?.models.findObject(uuid: $0)?.name ?? "#" }.joined(separator: ", "))>"
+        }
+
+        if !self.isNonnull {
+            str += "?"
+        }
+
+        if let d = self.documentation {
+            str += "\n  \(d)"
+        }
+
+        return str
     }
 }
