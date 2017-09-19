@@ -56,7 +56,7 @@ public class RemoveEnumCommand: Command {
             }
         }
 
-        guard project.models.removeObject(uuid: target.id) else {
+        guard project.models.removeEnum(uuid: target.id) else {
             throw PolymorphCLIError.objectNotFound(name: target.id.uuidString)
         }
 

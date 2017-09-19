@@ -9,6 +9,9 @@ let package = Package(
     dependencies: [
         .package(url: "https://github.com/Digipolitan/polymorph-core-swift.git", .branch("develop")),
         .package(url: "https://github.com/Digipolitan/command-line-args-swift.git", .branch("develop")),
+        .package(url: "https://github.com/Digipolitan/polymorph-gen-swift.git", .branch("develop")),
+        .package(url: "https://github.com/Digipolitan/polymorph-swiftgen-swift.git", .branch("develop")),
+        .package(url: "https://github.com/Digipolitan/polymorph-android-gen.git", .branch("develop"))
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -17,7 +20,10 @@ let package = Package(
             name: "PolymorphCLI",
             dependencies: [
                 "PolymorphCore",
-                "CommandLineArgs"
+                "CommandLineArgs",
+                "PolymorphGen",
+                "PolymorphSwiftGen",
+                "PolymorphAndroidGen"
             ]),
     ]
 )

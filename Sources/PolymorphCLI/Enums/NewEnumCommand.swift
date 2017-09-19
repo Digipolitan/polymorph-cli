@@ -49,13 +49,13 @@ public class NewEnumCommand: Command {
             throw PolymorphCLIError.enumExists(name: name)
         }
 
-        var e = Enum(name: name, package: try Package(string: package))
+        let e = Enum(name: name, package: try Package(string: package))
 
         if let documentation = arguments[Keys.documentation] as? String {
             e.documentation = documentation
         }
 
-        project.models.addObject(e)
+        project.models.addEnum(e)
 
         try ProjectStorage.save(project: project, at: file)
     }

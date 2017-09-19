@@ -15,14 +15,14 @@ extension Property: Helpable {
         var str = self.isTransient ? "transient " : ""
         str += self.name
         
-        if let type = self.project?.models.findObject(uuid: self.type) {
+        if let type = self.project?.natives[self.type] as? Object ?? self.project?.models.findObject(uuid: self.type) {
             str += " \(type.name)"
         } else {
             str += " #"
         }
 
         if let generics = self.genericTypes {
-            str += "<\(generics.map { self.project?.models.findObject(uuid: $0)?.name ?? "#" }.joined(separator: ", "))>"
+            str += "<\(generics.map { self.project?.natives[$0]?.name ?? self.project?.models.findObject(uuid: $0)?.name ?? "#" }.joined(separator: ", "))>"
         }
 
         if !self.isNonnull {

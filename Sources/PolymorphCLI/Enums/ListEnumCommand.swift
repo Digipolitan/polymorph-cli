@@ -54,7 +54,7 @@ public class ListEnumCommand: Command {
                 throw PolymorphCLIError.enumNotFound(name: using)
             }
         } else {
-            print(project.models.enums.map { $0.help(verbose: verbose) }.joined(separator: "\n"))
+            print(project.models.enums.values.map { $0.help(verbose: verbose) }.joined(separator: "\n"))
         }
     }
 }

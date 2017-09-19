@@ -54,7 +54,7 @@ public class ListClassCommand: Command {
                 throw PolymorphCLIError.classNotFound(name: using)
             }
         } else {
-            print(project.models.classes.map { $0.help(verbose: verbose) }.joined(separator: "\n"))
+            print(project.models.classes.values.map { $0.help(verbose: verbose) }.joined(separator: "\n\n"))
         }
     }
 }

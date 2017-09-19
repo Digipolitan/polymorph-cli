@@ -51,8 +51,6 @@ public class ClassRemovePropertyCommand: Command {
             throw PolymorphCLIError.propertyNotFound(name: name)
         }
 
-        project.models.updateObject(target)
-
         try ProjectStorage.save(project: project, at: file)
     }
 }

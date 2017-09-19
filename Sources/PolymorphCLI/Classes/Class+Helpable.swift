@@ -47,6 +47,6 @@ extension Class: Helpable {
             }
         }
 
-        return part.joined(separator: "\n\n")
+        return part.joined(separator: "\n")
     }
 }

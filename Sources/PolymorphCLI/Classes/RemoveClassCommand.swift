@@ -56,7 +56,7 @@ public class RemoveClassCommand: Command {
             }
         }
 
-        guard project.models.removeObject(uuid: target.id) else {
+        guard project.models.removeClass(uuid: target.id) else {
             throw PolymorphCLIError.objectNotFound(name: target.id.uuidString)
         }
 

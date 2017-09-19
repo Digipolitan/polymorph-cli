@@ -19,6 +19,7 @@ classCommands.add(child: RemoveClassCommand())
 let propertyCommands = classCommands.add(child: ClassPropertyCommand())
 propertyCommands.add(child: ClassNewPropertyCommand())
 propertyCommands.add(child: ClassRemovePropertyCommand())
+propertyCommands.add(child: ClassUpdatePropertyCommand())
 
 let enumCommands = polymorph.add(child: EnumCommand())
 enumCommands.add(child: NewEnumCommand())
@@ -28,6 +29,6 @@ enumCommands.add(child: EnumValueCommand())
 let valueCommands = enumCommands.add(child: EnumValueCommand())
 valueCommands.add(child: EnumNewValueCommand())
 
-polymorph.add(child: BuildProjectCommand())
+polymorph.add(child: BuildCommand())
 
 cla.handle(arguments)

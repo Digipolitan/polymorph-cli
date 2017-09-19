@@ -49,7 +49,7 @@ public class EnumNewValueCommand: Command {
 
         let project = try ProjectStorage.open(at: file)
 
-        guard var target = project.models.findEnum(name: targetEnum) else {
+        guard let target = project.models.findEnum(name: targetEnum) else {
             throw PolymorphCLIError.enumNotFound(name: targetEnum)
         }
 
@@ -69,8 +69,6 @@ public class EnumNewValueCommand: Command {
         guard target.addValue(value) else {
             throw PolymorphCLIError.enumValueExists(name: name)
         }
-
-        project.models.updateObject(target)
 
         try ProjectStorage.save(project: project, at: file)
     }

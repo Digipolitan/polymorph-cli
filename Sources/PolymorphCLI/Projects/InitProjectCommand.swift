@@ -16,14 +16,12 @@ public class InitProjectCommand: Command {
         public static let copyright: String = "copyright"
         public static let author: String = "author"
         public static let documentation: String = "documentation"
-        public static let version: String = "version"
         public static let name: String = "name"
     }
 
     public enum Options {
         public static let package = OptionDefinition(name: Keys.package, type: .string, alias: "p", isRequired: true, documentation: "The project main package")
         public static let copyright = OptionDefinition(name: Keys.copyright, type: .string, alias: "c", documentation: "Your company copyright")
-        public static let version = OptionDefinition(name: Keys.version, type: .string, alias: "v", documentation: "The project version")
         public static let author = OptionDefinition(name: Keys.author, type: .string, alias: "a", documentation: "The author of all generated files")
         public static let documentation = OptionDefinition(name: Keys.documentation, type: .string, alias: "d", documentation: "Project information")
         public static let name = OptionDefinition(name: Keys.name, type: .string, isRequired: true, documentation: "The project name")
@@ -39,7 +37,6 @@ public class InitProjectCommand: Command {
             PolymorphCommand.Options.file,
             Options.author,
             Options.copyright,
-            Options.version,
             Options.documentation,
             PolymorphCommand.Options.help
             ], main: Options.name, documentation: "The project starter")
@@ -62,9 +59,6 @@ public class InitProjectCommand: Command {
         }
         if let copyright = arguments[Keys.copyright] as? String {
             project.copyright = copyright
-        }
-        if let version = arguments[Keys.version] as? String {
-            project.version = version
         }
         if let documentation = arguments[Keys.documentation] as? String {
             project.documentation = documentation
