@@ -56,7 +56,7 @@ public class UpdateClassCommand: Command {
         }
         let project = try ProjectStorage.open(at: file)
 
-        guard var c = project.models.findClass(name: name) else {
+        guard let c = project.models.findClass(name: name) else {
             throw PolymorphCLIError.classNotFound(name: name)
         }
 

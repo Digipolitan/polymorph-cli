@@ -43,7 +43,7 @@ public class ClassRemovePropertyCommand: Command {
 
         let project = try ProjectStorage.open(at: file)
 
-        guard var target = project.models.findClass(name: targetClass) else {
+        guard let target = project.models.findClass(name: targetClass) else {
             throw PolymorphCLIError.classNotFound(name: targetClass)
         }
 
