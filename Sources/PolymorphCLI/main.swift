@@ -6,9 +6,11 @@ arguments[0] = PolymorphCommand.Consts.name
 
 let cla = CommandLineArgs()
 let polymorph = cla.root(command: PolymorphCommand())
-polymorph.add(child: InitProjectCommand())
-polymorph.add(child: UpdateProjectCommand())
-polymorph.add(child: RemoveProjectCommand())
+let projectCommands = polymorph.add(child: ProjectCommand())
+projectCommands.add(child: InitProjectCommand())
+projectCommands.add(child: InfoProjectCommand())
+projectCommands.add(child: UpdateProjectCommand())
+projectCommands.add(child: RemoveProjectCommand())
 
 let classCommands = polymorph.add(child: ClassCommand())
 classCommands.add(child: NewClassCommand())
@@ -30,5 +32,11 @@ let valueCommands = enumCommands.add(child: EnumValueCommand())
 valueCommands.add(child: EnumNewValueCommand())
 
 polymorph.add(child: BuildCommand())
+
+let nativeCommands = polymorph.add(child: NativeCommand())
+nativeCommands.add(child: ListNativeCommand())
+
+let transfomerCommands = polymorph.add(child: TransformerCommand())
+transfomerCommands.add(child: ListTransformerCommand())
 
 cla.handle(arguments)

@@ -30,6 +30,9 @@ extension Class: Helpable {
         if self.serializable {
             parents.append("Serializable")
         }
+        if self.injectable {
+            parents.append("Injectable")
+        }
 
         if parents.count > 0 {
             str += ": " + parents.joined(separator: ", ")
