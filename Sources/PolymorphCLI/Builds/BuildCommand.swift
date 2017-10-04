@@ -9,14 +9,14 @@ import Foundation
 import PolymorphCore
 import PolymorphGen
 import PolymorphSwiftGen
-import PolymorphAndroidGen
+//import PolymorphAndroidGen
 import CommandLineArgs
 
 public class BuildCommand: Command {
 
     fileprivate let platforms: [PlatformGen.Type] = [
         SwiftPlatformGen.self,
-        AndroidPlatformGen.self,
+        //AndroidPlatformGen.self,
     ]
 
     public enum Keys {

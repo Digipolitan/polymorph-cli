@@ -11,6 +11,7 @@ public enum PolymorphCLIError: Error {
 
     case fileExistsAt(path: String)
     case fileNotFound(path: String)
+    case standardInputError
 
     case classExists(name: String)
     case classNotFound(name: String)
@@ -24,4 +25,7 @@ public enum PolymorphCLIError: Error {
     case enumNotFound(name: String)
 
     case enumValueExists(name: String)
+
+    case transformerNotFound(name: String)
+
 }

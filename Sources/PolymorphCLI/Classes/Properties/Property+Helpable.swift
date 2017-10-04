@@ -15,8 +15,8 @@ extension Property: Helpable {
         var str = self.isTransient ? "transient " : ""
         str += self.name
         
-        if let type = self.project?.natives[self.type] as? Object ?? self.project?.models.findObject(uuid: self.type) {
-            str += " \(type.name)"
+        if let typeName = self.project?.natives[self.type]?.name ?? self.project?.models.findObject(uuid: self.type)?.name {
+            str += " \(typeName)"
         } else {
             str += " #"
         }

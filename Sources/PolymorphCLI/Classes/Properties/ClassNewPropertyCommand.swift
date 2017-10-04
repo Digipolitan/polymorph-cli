@@ -20,6 +20,10 @@ public class ClassNewPropertyCommand: Command {
         public static let primary: String = "primary"
         public static let transient: String = "transient"
         public static let targetClass: String = "class"
+        public static let const: String = "const"
+        public static let ignored: String = "ignored"
+        public static let transformer: String = "transformer"
+        public static let defaultValue: String = "defaultValue"
         public static let documentation: String = "documentation"
     }
 
@@ -32,6 +36,10 @@ public class ClassNewPropertyCommand: Command {
         public static let nonnull = OptionDefinition(name: Keys.nonnull, type: .boolean, alias: "nn", defaultValue: false, documentation: "Mark the property nonnull")
         public static let primary = OptionDefinition(name: Keys.primary, type: .boolean, alias: "p", defaultValue: false, documentation: "Mark the property primary")
         public static let transient = OptionDefinition(name: Keys.transient, type: .boolean, defaultValue: false, documentation: "Mark the property transient")
+        public static let const = OptionDefinition(name: Keys.const, type: .boolean, defaultValue: false, documentation: "Mark the property constant")
+        public static let ignored = OptionDefinition(name: Keys.ignored, type: .boolean, defaultValue: false, documentation: "Ignore the property during the mapping")
+        public static let transformer = OptionDefinition(name: Keys.transformer, type: .string, documentation: "Register a transformer for the given property ($ polymorph transformer list)")
+        public static let defaultValue = OptionDefinition(name: Keys.defaultValue, type: .string, alias: "dv", documentation: "Set the defaultValue for the property")
         public static let documentation = OptionDefinition(name: Keys.documentation, type: .string, alias: "d", documentation: "Description of the given property")
     }
 
@@ -49,6 +57,10 @@ public class ClassNewPropertyCommand: Command {
             Options.nonnull,
             Options.primary,
             Options.transient,
+            Options.const,
+            Options.ignored,
+            Options.transformer,
+            Options.defaultValue,
             Options.documentation,
             PolymorphCommand.Options.help
             ], main: Options.name, documentation: "Create a new property")
@@ -62,13 +74,15 @@ public class ClassNewPropertyCommand: Command {
         let targetClass = arguments[Keys.targetClass] as? String,
         let nonnull = arguments[Keys.nonnull] as? Bool,
         let primary = arguments[Keys.primary] as? Bool,
-        let transient = arguments[Keys.transient] as? Bool else {
+        let transient = arguments[Keys.transient] as? Bool,
+        let const = arguments[Keys.const] as? Bool,
+        let ignored = arguments[Keys.ignored] as? Bool else {
             return
         }
 
         let project = try ProjectStorage.open(at: file)
 
-        guard let typeObject = project.findNative(name: type) as? Object ?? project.models.findObject(name: type) else {
+        guard let typeId = project.findNative(name: type) ?? project.models.findObject(name: type)?.id else {
             throw PolymorphCLIError.objectNotFound(name: type)
         }
 
@@ -76,21 +90,33 @@ public class ClassNewPropertyCommand: Command {
             throw PolymorphCLIError.classNotFound(name: targetClass)
         }
 
-        let property = Property(name: name, type: typeObject.id)
+        let property = Property(name: name, type: typeId)
         property.isNonnull = nonnull
         property.isTransient = transient
         property.isPrimary = primary
+        property.isConst = const
 
-        if let key = arguments[Keys.key] as? String {
-            property.mapping = Property.Mapping(key: key)
+        if ignored {
+            property.mapping = Property.Mapping.ignored()
+        } else {
+            let key = arguments[Keys.key] as? String
+            var transformerConfiguration: Property.Mapping.TransformerConfiguration? = nil
+            if let transformer = arguments[Keys.transformer] as? String {
+                transformerConfiguration = try TransformerConfigurationBuilder.build(project: project, name: transformer)
+            }
+            if key != nil || transformerConfiguration != nil {
+                property.mapping = Property.Mapping(key: key, transformer: transformerConfiguration)
+            }
         }
+
+        property.defaultValue = arguments[Keys.defaultValue] as? String
 
         if let generics = arguments[Keys.genericTypes] as? [String] {
             property.genericTypes = try generics.map {
-                guard let type = project.findNative(name: $0) as? Object ?? project.models.findObject(name: $0) else {
+                guard let typeId = project.findNative(name: $0) ?? project.models.findObject(name: $0)?.id else {
                     throw PolymorphCLIError.objectNotFound(name: $0)
                 }
-                return type.id
+                return typeId
             }
         }
 
