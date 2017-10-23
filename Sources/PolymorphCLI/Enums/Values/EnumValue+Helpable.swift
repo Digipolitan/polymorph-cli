@@ -12,7 +12,7 @@ import PolymorphCore
 extension Enum.Value: Helpable {
 
     public func help() -> String {
-        var str = "\(self.name) = \(self.numeric)"
+        var str = "\(self.name) = \(self.raw)"
         if let d = self.documentation {
             str += "\n  \(d)"
         }
