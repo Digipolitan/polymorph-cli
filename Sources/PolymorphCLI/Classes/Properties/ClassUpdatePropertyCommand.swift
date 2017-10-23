@@ -88,10 +88,15 @@ public class ClassUpdatePropertyCommand: Command {
         }
 
         if let type = arguments[Keys.type] as? String {
-            guard let typeObject = project.findNative(name: type) as? Object ?? project.models.findObject(name: type) else {
+            guard let typeId = project.findNative(name: type) ?? project.models.findObject(name: type)?.id else {
                 throw PolymorphCLIError.objectNotFound(name: type)
             }
-            property.type = typeObject.id
+            if property.type != typeId {
+                if property.mapping?.transformer != nil { // if the property type change, remove the associated transformer
+                    property.mapping = Property.Mapping(key: property.mapping?.key)
+                }
+            }
+            property.type = typeId
         }
 
         if let nonnull = arguments[Keys.nonnull] as? Bool {
@@ -151,10 +156,10 @@ public class ClassUpdatePropertyCommand: Command {
 
         if let generics = arguments[Keys.genericTypes] as? [String] {
             property.genericTypes = try generics.map {
-                guard let type = project.findNative(name: $0) as? Object ?? project.models.findObject(name: $0) else {
+                guard let typeId = project.findNative(name: $0) ?? project.models.findObject(name: $0)?.id else {
                     throw PolymorphCLIError.objectNotFound(name: $0)
                 }
-                return type.id
+                return typeId
             }
         }
 
