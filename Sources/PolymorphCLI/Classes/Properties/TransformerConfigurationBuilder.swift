@@ -42,6 +42,4 @@ public class TransformerConfigurationBuilder {
         }
         return .init(id: uuid)
     }
-
-
 }

@@ -58,16 +58,16 @@ public class UpdateProjectCommand: Command {
             project.package = try Package(string: package)
         }
         if let author = arguments[Keys.author] as? String {
-            project.author = author
+            project.author = PolymorphCommand.transformNil(string: author)
         }
         if let copyright = arguments[Keys.copyright] as? String {
-            project.copyright = copyright
+            project.copyright = PolymorphCommand.transformNil(string: copyright)
         }
         if let version = arguments[Keys.version] as? String {
             project.version = version
         }
         if let documentation = arguments[Keys.documentation] as? String {
-            project.documentation = documentation
+            project.documentation = PolymorphCommand.transformNil(string: documentation)
         }
         try ProjectStorage.save(project: project, at: file)
     }

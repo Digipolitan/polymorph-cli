@@ -21,6 +21,10 @@ public class ClassUpdatePropertyCommand: Command {
         public static let primary: String = "primary"
         public static let transient: String = "transient"
         public static let targetClass: String = "class"
+        public static let const: String = "const"
+        public static let ignored: String = "ignored"
+        public static let transformer: String = "transformer"
+        public static let defaultValue: String = "defaultValue"
         public static let documentation: String = "documentation"
     }
 
@@ -34,6 +38,10 @@ public class ClassUpdatePropertyCommand: Command {
         public static let nonnull = OptionDefinition(name: Keys.nonnull, type: .boolean, alias: "nn", documentation: "Mark the property nonnull")
         public static let primary = OptionDefinition(name: Keys.primary, type: .boolean, alias: "p", documentation: "Mark the property primary")
         public static let transient = OptionDefinition(name: Keys.transient, type: .boolean, documentation: "Mark the property transient")
+        public static let const = OptionDefinition(name: Keys.const, type: .boolean, documentation: "Mark the property constant")
+        public static let ignored = OptionDefinition(name: Keys.ignored, type: .boolean, documentation: "Ignore the property during the mapping")
+        public static let transformer = OptionDefinition(name: Keys.transformer, type: .string, documentation: "Register a transformer for the given property ($ polymorph transformer list)")
+        public static let defaultValue = OptionDefinition(name: Keys.defaultValue, type: .string, alias: "dv", documentation: "Set the defaultValue for the property")
         public static let documentation = OptionDefinition(name: Keys.documentation, type: .string, alias: "d", documentation: "Description of the given property")
     }
 
@@ -52,6 +60,10 @@ public class ClassUpdatePropertyCommand: Command {
             Options.nonnull,
             Options.primary,
             Options.transient,
+            Options.const,
+            Options.ignored,
+            Options.transformer,
+            Options.defaultValue,
             Options.documentation,
             PolymorphCommand.Options.help
             ], main: Options.name, documentation: "Update given property")
@@ -91,8 +103,50 @@ public class ClassUpdatePropertyCommand: Command {
         if let primary = arguments[Keys.primary] as? Bool {
             property.isPrimary = primary
         }
-        if let key = arguments[Keys.key] as? String {
-            property.mapping = Property.Mapping(key: key)
+        if let const = arguments[Keys.const] as? Bool {
+            property.isConst = const
+        }
+        if let defaultValue = arguments[Keys.defaultValue] as? String {
+            property.defaultValue = PolymorphCommand.transformNil(string: defaultValue)
+        }
+
+        var isIgnored = false
+        if let ignored = arguments[Keys.primary] as? Bool {
+            if ignored {
+                property.mapping = Property.Mapping.ignored()
+                isIgnored = true
+            } else if property.mapping?.isIgnored == true {
+                property.mapping = nil
+            }
+        }
+        if !isIgnored {
+            var mappingKey: String? = nil
+            var updateKey: Bool = false
+            var updateTransformer: Bool = false
+            if let key = arguments[Keys.key] as? String {
+                updateKey = true
+                mappingKey = PolymorphCommand.transformNil(string: key)
+            }
+            var transformerConfiguration: Property.Mapping.TransformerConfiguration? = nil
+            if let transformer = arguments[Keys.transformer] as? String {
+                updateTransformer = true
+                if let newTransformer = PolymorphCommand.transformNil(string: transformer) {
+                    transformerConfiguration = try TransformerConfigurationBuilder.build(project: project, name: newTransformer)
+                }
+            }
+            if updateKey || updateTransformer {
+                if !updateKey {
+                    mappingKey = property.mapping?.key
+                }
+                if !updateTransformer {
+                    transformerConfiguration = property.mapping?.transformer
+                }
+                if mappingKey != nil || transformerConfiguration != nil {
+                    property.mapping = Property.Mapping(key: mappingKey, transformer: transformerConfiguration)
+                } else {
+                    property.mapping = nil
+                }
+            }
         }
 
         if let generics = arguments[Keys.genericTypes] as? [String] {
@@ -105,7 +159,7 @@ public class ClassUpdatePropertyCommand: Command {
         }
 
         if let d = arguments[Keys.documentation] as? String {
-            property.documentation = d
+            property.documentation = PolymorphCommand.transformNil(string: d)
         }
 
         if let rename = arguments[Keys.rename] as? String {

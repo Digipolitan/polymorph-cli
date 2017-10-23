@@ -31,4 +31,11 @@ public class PolymorphCommand: Command {
     public func run(_ arguments: [String : Any]) throws {
         throw CommandLineError.unimplementedCommand
     }
+
+    public static func transformNil(string: String) -> String? {
+        guard string != "@null" else {
+            return nil
+        }
+        return string
+    }
 }
