@@ -23,6 +23,8 @@ public enum PolymorphCLIError: Error {
 
     case enumExists(name: String)
     case enumNotFound(name: String)
+    case enumRawTypeInvalid(value: String, info: String)
+    case enumCaseNilValue(name: String)
 
     case enumValueExists(name: String)
 
