@@ -8,7 +8,7 @@ let package = Package(
     name: "PolymorphCLI",
     dependencies: [
         .package(url: "https://github.com/Digipolitan/command-line-args.git", .branch("master")),
-        .package(url: "https://github.com/Digipolitan/polymorph-swift-gen.git", .branch("develop"))
+        .package(url: "https://github.com/Digipolitan/polymorph-swift-gen.git", .branch("master"))
         //.package(url: "https://github.com/Digipolitan/polymorph-android-gen.git", .branch("develop"))
     ],
     targets: [
