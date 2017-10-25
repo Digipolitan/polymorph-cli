@@ -31,6 +31,8 @@ enumCommands.add(child: EnumValueCommand())
 let valueCommands = enumCommands.add(child: EnumValueCommand())
 valueCommands.add(child: EnumNewValueCommand())
 
+let serviceCommands = polymorph.add(child: ServiceCommand())
+
 polymorph.add(child: BuildCommand())
 
 let nativeCommands = polymorph.add(child: NativeCommand())

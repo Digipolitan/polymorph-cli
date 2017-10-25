@@ -84,7 +84,7 @@ public class UpdateClassCommand: Command {
         }
 
         if let documentation = arguments[Keys.documentation] as? String {
-            c.documentation = documentation
+            c.documentation = PolymorphCommand.transformNil(string: documentation)
         }
 
         try ProjectStorage.save(project: project, at: file)
