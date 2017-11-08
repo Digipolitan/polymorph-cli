@@ -116,7 +116,7 @@ public class ClassUpdatePropertyCommand: Command {
         }
 
         var isIgnored = false
-        if let ignored = arguments[Keys.primary] as? Bool {
+        if let ignored = arguments[Keys.ignored] as? Bool {
             if ignored {
                 property.mapping = Property.Mapping.ignored()
                 isIgnored = true
