@@ -30,4 +30,8 @@ public enum PolymorphCLIError: Error {
 
     case transformerNotFound(name: String)
 
+    case externalExists(name: String)
+    case externalTypeInvalid(value: String, info: String)
+    case externalNotFound(name: String)
+
 }

@@ -53,7 +53,7 @@ public class NewEnumCommand: Command {
             throw PolymorphCLIError.enumExists(name: name)
         }
         guard let rawType = Enum.RawType(rawValue: rawTypeString) else {
-            throw PolymorphCLIError.enumRawTypeInvalid(value: rawTypeString, info: "Valid type are string or int")
+            throw PolymorphCLIError.enumRawTypeInvalid(value: rawTypeString, info: "Valid type are \(Enum.RawType.all().map { $0.rawValue }.joined(separator: ", "))")
         }
 
         let e = Enum(name: name, package: try Package(string: package), rawType: rawType)
