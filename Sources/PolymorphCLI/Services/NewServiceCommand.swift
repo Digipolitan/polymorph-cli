@@ -22,8 +22,14 @@ public class NewServiceCommand: Command {
     public enum Options {
         public static let name = OptionDefinition(name: Keys.name, type: .string, isRequired: true, documentation: "The service name, must be unique")
         public static let package = OptionDefinition(name: Keys.package, type: .string, alias: "p", isRequired: true, documentation: "The package of the new service")
-        public static let serializer = OptionDefinition(name: Keys.serializer, type: .string, defaultValue: "json", documentation: "Set the default input serializer format for all endpoints (\(Service.Transformer.all().map { $0.rawValue }.joined(separator: ", ")))")
-        public static let parser = OptionDefinition(name: Keys.parser, type: .string, defaultValue: "json", documentation: "Set the default output parser format for all endpoints (\(Service.Transformer.all().map { $0.rawValue }.joined(separator: ", ")))")
+        public static let serializer = OptionDefinition(name: Keys.serializer,
+                                                        type: .string,
+                                                        defaultValue: "json",
+                                                        documentation: "Set the default input serializer format for all endpoints (\(Service.Transformer.all().map { $0.rawValue }.joined(separator: ", ")))")
+        public static let parser = OptionDefinition(name: Keys.parser,
+                                                    type: .string,
+                                                    defaultValue: "json",
+                                                    documentation: "Set the default output parser format for all endpoints (\(Service.Transformer.all().map { $0.rawValue }.joined(separator: ", ")))")
         public static let documentation = OptionDefinition(name: Keys.documentation, type: .string, alias: "d", documentation: "Description of the given service")
     }
 
@@ -42,7 +48,7 @@ public class NewServiceCommand: Command {
             ], main: Options.name, documentation: "Create a new service")
     }()
 
-    public func run(_ arguments: [String : Any]) throws {
+    public func run(_ arguments: [String: Any]) throws {
         /*
 
         guard

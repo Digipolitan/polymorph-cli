@@ -34,7 +34,7 @@ public class ClassUpdatePropertyCommand: Command {
         public static let type = OptionDefinition(name: Keys.type, type: .string, alias: "t", documentation: "The property type")
         public static let targetClass = OptionDefinition(name: Keys.targetClass, type: .string, alias: "c", isRequired: true, documentation: "The property will be added to the given class")
         public static let key = OptionDefinition(name: Keys.key, type: .string, alias: "k", documentation: "The property mapping key")
-        public static let genericTypes = OptionDefinition(name: Keys.genericTypes, type: .string, alias: "gts",  isMultiple: true, documentation: "List of generic types")
+        public static let genericTypes = OptionDefinition(name: Keys.genericTypes, type: .string, alias: "gts", isMultiple: true, documentation: "List of generic types")
         public static let nonnull = OptionDefinition(name: Keys.nonnull, type: .boolean, alias: "nn", documentation: "Mark the property nonnull")
         public static let primary = OptionDefinition(name: Keys.primary, type: .boolean, alias: "p", documentation: "Mark the property primary")
         public static let transient = OptionDefinition(name: Keys.transient, type: .boolean, documentation: "Mark the property transient")
@@ -69,7 +69,7 @@ public class ClassUpdatePropertyCommand: Command {
             ], main: Options.name, documentation: "Update given property")
     }()
 
-    public func run(_ arguments: [String : Any]) throws {
+    public func run(_ arguments: [String: Any]) throws {
         guard
             let file = arguments[PolymorphCommand.Keys.file] as? String,
             let name = arguments[Keys.name] as? String,
@@ -115,6 +115,36 @@ public class ClassUpdatePropertyCommand: Command {
             property.defaultValue = PolymorphCommand.transformNil(string: defaultValue)
         }
 
+        try self.updatePropertyMapping(property, arguments: arguments)
+
+        if let generics = arguments[Keys.genericTypes] as? [String] {
+            property.genericTypes = try generics.map {
+                guard let typeId = project.findNative(name: $0) ?? project.models.findObject(name: $0)?.id else {
+                    throw PolymorphCLIError.objectNotFound(name: $0)
+                }
+                return typeId
+            }
+        }
+
+        if let d = arguments[Keys.documentation] as? String {
+            property.documentation = PolymorphCommand.transformNil(string: d)
+        }
+
+        if let rename = arguments[Keys.rename] as? String {
+            guard target.findProperty(name: rename) == nil else {
+                throw PolymorphCLIError.propertyExists(name: rename)
+            }
+            property.name = rename
+        }
+
+        try ProjectStorage.save(project: project, at: file)
+    }
+
+    fileprivate func updatePropertyMapping(_ property: Property, arguments: [String: Any]) throws {
+        guard let project = property.project else {
+            return
+        }
+
         var isIgnored = false
         if let ignored = arguments[Keys.ignored] as? Bool {
             if ignored {
@@ -124,6 +154,7 @@ public class ClassUpdatePropertyCommand: Command {
                 property.mapping = nil
             }
         }
+
         if !isIgnored {
             var mappingKey: String? = nil
             var updateKey: Bool = false
@@ -153,28 +184,5 @@ public class ClassUpdatePropertyCommand: Command {
                 }
             }
         }
-
-        if let generics = arguments[Keys.genericTypes] as? [String] {
-            property.genericTypes = try generics.map {
-                guard let typeId = project.findNative(name: $0) ?? project.models.findObject(name: $0)?.id else {
-                    throw PolymorphCLIError.objectNotFound(name: $0)
-                }
-                return typeId
-            }
-        }
-
-        if let d = arguments[Keys.documentation] as? String {
-            property.documentation = PolymorphCommand.transformNil(string: d)
-        }
-
-        if let rename = arguments[Keys.rename] as? String {
-            guard target.findProperty(name: rename) == nil else {
-                throw PolymorphCLIError.propertyExists(name: rename)
-            }
-            property.name = rename
-        }
-
-        try ProjectStorage.save(project: project, at: file)
     }
 }
-

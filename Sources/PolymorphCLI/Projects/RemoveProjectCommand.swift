@@ -18,7 +18,7 @@ public class RemoveProjectCommand: Command {
         return CommandDefinition(name: Consts.name, options: [PolymorphCommand.Options.help], main: PolymorphCommand.Options.file, documentation: "Delete the polymorph project")
     }()
 
-    public func run(_ arguments: [String : Any]) throws {
+    public func run(_ arguments: [String: Any]) throws {
         guard let file = arguments[PolymorphCommand.Keys.file] as? String else {
             return
         }
@@ -26,4 +26,3 @@ public class RemoveProjectCommand: Command {
         try ProjectStorage.fileManager.removeItem(atPath: file)
     }
 }
-

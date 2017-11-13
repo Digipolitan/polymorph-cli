@@ -9,10 +9,6 @@ import Foundation
 import PolymorphCore
 import CommandLineArgs
 
-import Foundation
-import PolymorphCore
-import CommandLineArgs
-
 public class NativeCommand: Command {
 
     public enum Consts {
@@ -25,11 +21,7 @@ public class NativeCommand: Command {
             ], documentation: "Manage all polymorph native type")
     }()
 
-    public func run(_ arguments: [String : Any]) throws {
+    public func run(_ arguments: [String: Any]) throws {
         throw CommandLineError.unimplementedCommand
     }
 }
-
-
-
-

@@ -14,7 +14,7 @@ extension Property: Helpable {
     public func help() -> String {
         var str = self.isTransient ? "transient " : ""
         str += self.name
-        
+
         if let typeName = self.project?.natives[self.type]?.name ?? self.project?.models.findObject(uuid: self.type)?.name {
             str += " \(typeName)"
         } else {

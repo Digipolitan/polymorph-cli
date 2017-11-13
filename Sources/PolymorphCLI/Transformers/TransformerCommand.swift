@@ -21,10 +21,7 @@ public class TransformerCommand: Command {
             ], documentation: "Manage all polymorph transformers")
     }()
 
-    public func run(_ arguments: [String : Any]) throws {
+    public func run(_ arguments: [String: Any]) throws {
         throw CommandLineError.unimplementedCommand
     }
 }
-
-
-

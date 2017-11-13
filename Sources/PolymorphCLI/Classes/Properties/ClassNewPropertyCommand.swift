@@ -32,7 +32,7 @@ public class ClassNewPropertyCommand: Command {
         public static let type = OptionDefinition(name: Keys.type, type: .string, alias: "t", isRequired: true, documentation: "The property type")
         public static let targetClass = OptionDefinition(name: Keys.targetClass, type: .string, alias: "c", isRequired: true, documentation: "The property will be added to the given class")
         public static let key = OptionDefinition(name: Keys.key, type: .string, alias: "k", documentation: "The property mapping key")
-        public static let genericTypes = OptionDefinition(name: Keys.genericTypes, type: .string, alias: "gts",  isMultiple: true, documentation: "List of generic types")
+        public static let genericTypes = OptionDefinition(name: Keys.genericTypes, type: .string, alias: "gts", isMultiple: true, documentation: "List of generic types")
         public static let nonnull = OptionDefinition(name: Keys.nonnull, type: .boolean, alias: "nn", defaultValue: false, documentation: "Mark the property nonnull")
         public static let primary = OptionDefinition(name: Keys.primary, type: .boolean, alias: "p", defaultValue: false, documentation: "Mark the property primary")
         public static let transient = OptionDefinition(name: Keys.transient, type: .boolean, defaultValue: false, documentation: "Mark the property transient")
@@ -66,7 +66,7 @@ public class ClassNewPropertyCommand: Command {
             ], main: Options.name, documentation: "Create a new property")
     }()
 
-    public func run(_ arguments: [String : Any]) throws {
+    public func run(_ arguments: [String: Any]) throws {
         guard
         let file = arguments[PolymorphCommand.Keys.file] as? String,
         let name = arguments[Keys.name] as? String,

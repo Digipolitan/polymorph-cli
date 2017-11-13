@@ -22,7 +22,7 @@ public class ListNativeCommand: Command {
             ], documentation: "Search native type in the project")
     }()
 
-    public func run(_ arguments: [String : Any]) throws {
+    public func run(_ arguments: [String: Any]) throws {
         guard
             let file = arguments[PolymorphCommand.Keys.file] as? String else {
                 return

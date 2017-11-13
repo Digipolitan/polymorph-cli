@@ -33,5 +33,3 @@ extension Enum: Helpable {
         return part.joined(separator: "\n\n")
     }
 }
-
-

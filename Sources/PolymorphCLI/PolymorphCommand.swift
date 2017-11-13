@@ -28,7 +28,7 @@ public class PolymorphCommand: Command {
         return CommandDefinition(name: Consts.name, options: [Options.help], documentation: "Command line tools to generate source code files")
     }()
 
-    public func run(_ arguments: [String : Any]) throws {
+    public func run(_ arguments: [String: Any]) throws {
         throw CommandLineError.unimplementedCommand
     }
 

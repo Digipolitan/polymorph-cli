@@ -33,7 +33,7 @@ public class RemoveEnumCommand: Command {
             ], main: Options.name, documentation: "Remove an enum")
     }()
 
-    public func run(_ arguments: [String : Any]) throws {
+    public func run(_ arguments: [String: Any]) throws {
         guard
             let file = arguments[PolymorphCommand.Keys.file] as? String,
             let name = arguments[Keys.name] as? String else {
@@ -50,7 +50,7 @@ public class RemoveEnumCommand: Command {
             let used = project.models.searchClasses(linkedTo: target.id)
             guard used.count == 0 else {
                 print("The \(name) enum is linked to other classes :")
-                print(used.map( { $0.help() } ).joined(separator: "\n"))
+                print(used.map { $0.help() }.joined(separator: "\n"))
                 print("Use the --force option to remove it")
                 return
             }
@@ -63,4 +63,3 @@ public class RemoveEnumCommand: Command {
         try ProjectStorage.save(project: project, at: file)
     }
 }
-

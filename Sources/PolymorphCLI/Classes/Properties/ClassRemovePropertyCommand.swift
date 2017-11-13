@@ -33,7 +33,7 @@ public class ClassRemovePropertyCommand: Command {
             ], main: Options.name, documentation: "Remove a property")
     }()
 
-    public func run(_ arguments: [String : Any]) throws {
+    public func run(_ arguments: [String: Any]) throws {
         guard
             let file = arguments[PolymorphCommand.Keys.file] as? String,
             let name = arguments[Keys.name] as? String,
