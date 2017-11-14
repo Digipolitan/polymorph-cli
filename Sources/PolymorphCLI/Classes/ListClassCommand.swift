@@ -37,7 +37,7 @@ public class ListClassCommand: Command {
             ], documentation: "Search classes in the project")
     }()
 
-    public func run(_ arguments: [String : Any]) throws {
+    public func run(_ arguments: [String: Any]) throws {
         guard
         let file = arguments[PolymorphCommand.Keys.file] as? String,
         let verbose = arguments[Keys.verbose] as? Bool else {

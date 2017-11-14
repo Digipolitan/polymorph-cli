@@ -23,8 +23,7 @@ public class EnumCommand: Command {
             ], documentation: "Manage all enums from the given project")
     }()
 
-    public func run(_ arguments: [String : Any]) throws {
+    public func run(_ arguments: [String: Any]) throws {
         throw CommandLineError.unimplementedCommand
     }
 }
-

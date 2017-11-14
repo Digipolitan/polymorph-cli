@@ -42,7 +42,7 @@ public class InitProjectCommand: Command {
             ], main: Options.name, documentation: "The project starter")
     }()
 
-    public func run(_ arguments: [String : Any]) throws {
+    public func run(_ arguments: [String: Any]) throws {
         guard
         let file = arguments[PolymorphCommand.Keys.file] as? String,
         let name = arguments[Keys.name] as? String,

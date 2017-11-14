@@ -15,7 +15,7 @@ import CommandLineArgs
 public class BuildCommand: Command {
 
     fileprivate let platforms: [PlatformGen.Type] = [
-        SwiftPlatformGen.self,
+        SwiftPlatformGen.self
         //AndroidPlatformGen.self,
     ]
 
@@ -34,7 +34,10 @@ public class BuildCommand: Command {
 
     public lazy var definition: CommandDefinition = {
 
-        let platforms = OptionDefinition(name: Keys.platforms, type: .string, alias: "p", isMultiple: true, documentation: "Select target platforms: \(self.platforms.map { $0.name.lowercased() }.joined(separator: ", ")), ignore this options to build all platforms")
+        let platforms = OptionDefinition(name: Keys.platforms,
+                                         type: .string, alias: "p",
+                                         isMultiple: true,
+                                         documentation: "Select target platforms: \(self.platforms.map { $0.name.lowercased() }.joined(separator: ", ")), ignore this options to build all platforms")
 
         return CommandDefinition(name: Consts.name, options: [
             Options.gen,
@@ -43,7 +46,7 @@ public class BuildCommand: Command {
             ], main: PolymorphCommand.Options.file, documentation: "Generate source code from the given project")
     }()
 
-    public func run(_ arguments: [String : Any]) throws {
+    public func run(_ arguments: [String: Any]) throws {
         guard
             let file = arguments[PolymorphCommand.Keys.file] as? String else {
                 return

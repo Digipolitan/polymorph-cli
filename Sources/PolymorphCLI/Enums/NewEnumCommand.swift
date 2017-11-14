@@ -39,7 +39,7 @@ public class NewEnumCommand: Command {
             ], main: Options.name, documentation: "Create a new enum")
     }()
 
-    public func run(_ arguments: [String : Any]) throws {
+    public func run(_ arguments: [String: Any]) throws {
         guard
             let file = arguments[PolymorphCommand.Keys.file] as? String,
             let name = arguments[Keys.name] as? String,
@@ -53,7 +53,7 @@ public class NewEnumCommand: Command {
             throw PolymorphCLIError.enumExists(name: name)
         }
         guard let rawType = Enum.RawType(rawValue: rawTypeString) else {
-            throw PolymorphCLIError.enumRawTypeInvalid(value: rawTypeString, info: "Valid type are string or int")
+            throw PolymorphCLIError.enumRawTypeInvalid(value: rawTypeString, info: "Valid type are \(Enum.RawType.all().map { $0.rawValue }.joined(separator: ", "))")
         }
 
         let e = Enum(name: name, package: try Package(string: package), rawType: rawType)
@@ -67,4 +67,3 @@ public class NewEnumCommand: Command {
         try ProjectStorage.save(project: project, at: file)
     }
 }
-

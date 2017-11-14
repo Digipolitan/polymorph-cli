@@ -1,21 +1,21 @@
 //
-//  Native+Helpable.swift
+//  External+Helpable.swift
 //  PolymorphCLI
 //
-//  Created by Benoit BRIATTE on 04/10/2017.
+//  Created by Benoit BRIATTE on 13/11/2017.
 //
 
 import Foundation
 import CommandLineArgs
 import PolymorphCore
 
-extension Native: Helpable {
+extension External: Helpable {
 
     public func help() -> String {
         return self.help(verbose: false)
     }
 
     public func help(verbose: Bool) -> String {
-        return self.name
+        return "\(self.name): \(self.type.rawValue)"
     }
 }

@@ -32,6 +32,13 @@ let valueCommands = enumCommands.add(child: EnumValueCommand())
 valueCommands.add(child: EnumNewValueCommand())
 
 let serviceCommands = polymorph.add(child: ServiceCommand())
+serviceCommands.add(child: NewServiceCommand())
+
+let externalCommands = polymorph.add(child: ExternalCommand())
+externalCommands.add(child: NewExternalCommand())
+externalCommands.add(child: ListExternalCommand())
+externalCommands.add(child: UpdateExternalCommand())
+externalCommands.add(child: RemoveExternalCommand())
 
 polymorph.add(child: BuildCommand())
 

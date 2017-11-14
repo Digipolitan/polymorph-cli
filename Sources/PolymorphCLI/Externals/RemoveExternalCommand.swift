@@ -1,15 +1,15 @@
 //
-//  EnumRemoveCommand.swift
+//  RemoveExternalCommand.swift
 //  PolymorphCLI
 //
-//  Created by Benoit BRIATTE on 07/08/2017.
+//  Created by Benoit BRIATTE on 14/11/2017.
 //
 
 import Foundation
 import PolymorphCore
 import CommandLineArgs
 
-public class RemoveEnumCommand: Command {
+public class RemoveExternalCommand: Command {
 
     public enum Keys {
         public static let name: String = "name"
@@ -17,8 +17,8 @@ public class RemoveEnumCommand: Command {
     }
 
     public enum Options {
-        public static let name = OptionDefinition(name: Keys.name, type: .string, isRequired: true, documentation: "The enum name")
-        public static let force = OptionDefinition(name: Keys.force, type: .boolean, alias: "f", defaultValue: false, documentation: "Force to remove the enum")
+        public static let name = OptionDefinition(name: Keys.name, type: .string, isRequired: true, documentation: "The external name")
+        public static let force = OptionDefinition(name: Keys.force, type: .boolean, alias: "f", defaultValue: false, documentation: "Force to remove the external object")
     }
 
     public enum Consts {
@@ -30,7 +30,7 @@ public class RemoveEnumCommand: Command {
             Options.force,
             PolymorphCommand.Options.file,
             PolymorphCommand.Options.help
-            ], main: Options.name, documentation: "Remove an enum")
+            ], main: Options.name, documentation: "Remove the external object")
     }()
 
     public func run(_ arguments: [String: Any]) throws {
@@ -42,21 +42,21 @@ public class RemoveEnumCommand: Command {
 
         let project = try ProjectStorage.open(at: file)
 
-        guard let target = project.models.findEnum(name: name) else {
-            throw PolymorphCLIError.enumNotFound(name: name)
+        guard let target = project.models.findExternal(name: name) else {
+            throw PolymorphCLIError.externalNotFound(name: name)
         }
 
         if let force = arguments[Keys.force] as? Bool, force == false {
             let used = project.models.searchClasses(linkedTo: target.id)
             guard used.count == 0 else {
-                print("The \(name) enum is linked to other classes :")
+                print("The external \(name) is linked to other classes :")
                 print(used.map { $0.help() }.joined(separator: "\n"))
                 print("Use the --force option to remove it")
                 return
             }
         }
 
-        guard project.models.removeEnum(uuid: target.id) else {
+        guard project.models.removeExternal(uuid: target.id) else {
             throw PolymorphCLIError.objectNotFound(name: target.id.uuidString)
         }
 

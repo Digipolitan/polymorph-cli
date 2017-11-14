@@ -21,7 +21,7 @@ public class EnumValueCommand: Command {
             ], documentation: "Manage all values from the given enum")
     }()
 
-    public func run(_ arguments: [String : Any]) throws {
+    public func run(_ arguments: [String: Any]) throws {
         throw CommandLineError.unimplementedCommand
     }
 }

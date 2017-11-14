@@ -21,7 +21,7 @@ public class ClassPropertyCommand: Command {
             ], documentation: "Manage all properties from the given class")
     }()
 
-    public func run(_ arguments: [String : Any]) throws {
+    public func run(_ arguments: [String: Any]) throws {
         throw CommandLineError.unimplementedCommand
     }
 }

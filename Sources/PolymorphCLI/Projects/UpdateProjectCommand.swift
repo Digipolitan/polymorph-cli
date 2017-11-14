@@ -46,7 +46,7 @@ public class UpdateProjectCommand: Command {
             ], documentation: "Update polymorph project info")
     }()
 
-    public func run(_ arguments: [String : Any]) throws {
+    public func run(_ arguments: [String: Any]) throws {
         guard let file = arguments[PolymorphCommand.Keys.file] as? String else {
             return
         }

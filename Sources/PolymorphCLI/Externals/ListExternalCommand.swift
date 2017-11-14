@@ -1,15 +1,15 @@
 //
-//  ListEnumCommand.swift
+//  ListExternalCommand.swift
 //  PolymorphCLI
 //
-//  Created by Benoit BRIATTE on 07/08/2017.
+//  Created by Benoit BRIATTE on 13/11/2017.
 //
 
 import Foundation
 import PolymorphCore
 import CommandLineArgs
 
-public class ListEnumCommand: Command {
+public class ListExternalCommand: Command {
 
     public enum Keys {
         public static let search: String = "search"
@@ -18,9 +18,9 @@ public class ListEnumCommand: Command {
     }
 
     public enum Options {
-        public static let search = OptionDefinition(name: Keys.search, type: .string, alias: "s", documentation: "Search enum matching this value")
+        public static let search = OptionDefinition(name: Keys.search, type: .string, alias: "s", documentation: "Search external matching this value")
         public static let using = OptionDefinition(name: Keys.using, type: .string, alias: "u", documentation: "Search classes using this value, such as contains property of this type")
-        public static let verbose = OptionDefinition(name: Keys.verbose, type: .boolean, alias: "v", defaultValue: false, documentation: "Display all information about enums")
+        public static let verbose = OptionDefinition(name: Keys.verbose, type: .boolean, alias: "v", defaultValue: false, documentation: "Display all information about externals")
     }
 
     public enum Consts {
@@ -34,7 +34,7 @@ public class ListEnumCommand: Command {
             Options.verbose,
             PolymorphCommand.Options.file,
             PolymorphCommand.Options.help
-            ], documentation: "Search enums in the project")
+            ], documentation: "Search externals in the project")
     }()
 
     public func run(_ arguments: [String: Any]) throws {
@@ -46,15 +46,16 @@ public class ListEnumCommand: Command {
         let project = try ProjectStorage.open(at: file)
 
         if let search = arguments[Keys.search] as? String {
-            print(project.models.searchEnums(matching: search).map { $0.help(verbose: verbose) }.joined(separator: "\n\n"))
+            print(project.models.searchExternals(matching: search).map { $0.help(verbose: verbose) }.joined(separator: "\n\n"))
         } else if let using = arguments[Keys.using] as? String {
-            if let type = project.models.findEnum(name: using) {
+            if let type = project.models.findExternal(name: using) {
                 print(project.models.searchClasses(linkedTo: type.id).map { $0.help(verbose: verbose) }.joined(separator: "\n\n"))
             } else {
-                throw PolymorphCLIError.enumNotFound(name: using)
+                throw PolymorphCLIError.externalNotFound(name: using)
             }
         } else {
-            print(project.models.enums.values.map { $0.help(verbose: verbose) }.joined(separator: "\n"))
+            print(project.models.externals.values.map { $0.help(verbose: verbose) }.joined(separator: "\n"))
         }
     }
 }
+

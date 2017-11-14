@@ -18,7 +18,7 @@ public class InfoProjectCommand: Command {
         return CommandDefinition(name: Consts.name, options: [PolymorphCommand.Options.help], main: PolymorphCommand.Options.file, documentation: "Display the polymorph project")
     }()
 
-    public func run(_ arguments: [String : Any]) throws {
+    public func run(_ arguments: [String: Any]) throws {
         guard let file = arguments[PolymorphCommand.Keys.file] as? String else {
             return
         }
@@ -31,5 +31,3 @@ public class InfoProjectCommand: Command {
         print("Documentation: \(project.documentation ?? "")")
     }
 }
-
-

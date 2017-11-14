@@ -22,7 +22,7 @@ public class ListTransformerCommand: Command {
             ], documentation: "Search all transformers in the project")
     }()
 
-    public func run(_ arguments: [String : Any]) throws {
+    public func run(_ arguments: [String: Any]) throws {
         guard
             let file = arguments[PolymorphCommand.Keys.file] as? String else {
                 return
@@ -32,4 +32,3 @@ public class ListTransformerCommand: Command {
         print(project.transformers.values.map { $0.help() }.joined(separator: "\n"))
     }
 }
-

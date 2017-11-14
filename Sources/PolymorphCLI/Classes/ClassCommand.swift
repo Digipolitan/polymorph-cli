@@ -21,8 +21,7 @@ public class ClassCommand: Command {
             ], documentation: "Manage all classes from the given project")
     }()
 
-    public func run(_ arguments: [String : Any]) throws {
+    public func run(_ arguments: [String: Any]) throws {
         throw CommandLineError.unimplementedCommand
     }
 }
-

@@ -40,7 +40,7 @@ public class EnumNewValueCommand: Command {
             ], main: Options.name, documentation: "Create a new value")
     }()
 
-    public func run(_ arguments: [String : Any]) throws {
+    public func run(_ arguments: [String: Any]) throws {
         guard
             let file = arguments[PolymorphCommand.Keys.file] as? String,
             let name = arguments[Keys.name] as? String,
@@ -90,4 +90,3 @@ public class EnumNewValueCommand: Command {
         try ProjectStorage.save(project: project, at: file)
     }
 }
-

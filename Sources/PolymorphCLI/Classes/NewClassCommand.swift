@@ -10,7 +10,7 @@ import PolymorphCore
 import CommandLineArgs
 
 public class NewClassCommand: Command {
-    
+
     public enum Keys {
         public static let name: String = "name"
         public static let package: String = "package"
@@ -45,7 +45,7 @@ public class NewClassCommand: Command {
             ], main: Options.name, documentation: "Create a new class")
     }()
 
-    public func run(_ arguments: [String : Any]) throws {
+    public func run(_ arguments: [String: Any]) throws {
         guard
         let file = arguments[PolymorphCommand.Keys.file] as? String,
         let name = arguments[Keys.name] as? String,
