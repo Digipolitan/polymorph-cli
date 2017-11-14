@@ -39,7 +39,7 @@ public class ClassNewPropertyCommand: Command {
         public static let const = OptionDefinition(name: Keys.const, type: .boolean, defaultValue: false, documentation: "Mark the property constant")
         public static let ignored = OptionDefinition(name: Keys.ignored, type: .boolean, defaultValue: false, documentation: "Ignore the property during the mapping")
         public static let transformer = OptionDefinition(name: Keys.transformer, type: .string, documentation: "Register a transformer for the given property ($ polymorph transformer list)")
-        public static let defaultValue = OptionDefinition(name: Keys.defaultValue, type: .string, alias: "dv", documentation: "Set the defaultValue for the property")
+        public static let defaultValue = OptionDefinition(name: Keys.defaultValue, type: .string, alias: "v", documentation: "Set the defaultValue for the property")
         public static let documentation = OptionDefinition(name: Keys.documentation, type: .string, alias: "d", documentation: "Description of the given property")
     }
 
