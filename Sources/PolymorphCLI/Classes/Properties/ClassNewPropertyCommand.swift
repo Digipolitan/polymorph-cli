@@ -103,6 +103,8 @@ public class ClassNewPropertyCommand: Command {
             var transformerConfiguration: Property.Mapping.TransformerConfiguration? = nil
             if let transformer = arguments[Keys.transformer] as? String {
                 transformerConfiguration = try TransformerConfigurationBuilder.build(project: project, name: transformer)
+            } else if let native = project.natives[typeId] {
+                transformerConfiguration = try? TransformerConfigurationBuilder.build(project: project, name: native.name)
             }
             if key != nil || transformerConfiguration != nil {
                 property.mapping = Property.Mapping(key: key, transformer: transformerConfiguration)
