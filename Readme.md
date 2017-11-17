@@ -26,6 +26,12 @@ $ sudo mv ./.build/x86_64-apple-macosx10.10/release/PolymorphCLI /usr/local/bin/
 
 Download the artifact associated to the GitHub release and move it to `/usr/local/bin/polymorph` in your computer
 
+* With this follow curl command
+
+```sh
+curl https://api.github.com/repos/Digipolitan/polymorph-cli/releases/latest | python -c "import sys, json; print json.load(sys.stdin)['assets'][0]['browser_download_url']" | xargs -I % curl -L % > /usr/local/bin/polymorph && chmod u+x /usr/local/bin/polymorph
+```
+
 ## usage
 
 ```sh
