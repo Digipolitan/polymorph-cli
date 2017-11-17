@@ -19,12 +19,12 @@ extension Class: Helpable {
         var part: [String] = []
 
         var parents: [String] = []
-        var str = self.canonicalName ?? self.name
+        var str = (self.canonicalName ?? self.name).bold
         if let extends = self.extends {
             if let parent = self.project?.models.findObject(uuid: extends) as? Class {
-                parents.append(parent.name)
+                parents.append(parent.name.magenta)
             } else {
-                parents.append("#")
+                parents.append("#".red)
             }
         }
         if self.serializable {
@@ -44,10 +44,13 @@ extension Class: Helpable {
             if let d = self.documentation {
                 part.append(d)
             }
+            part.append("Properties:".underline)
             if self.properties.count > 0 {
-                part.append("PROPERTIES: ")
                 part.append(contentsOf: self.properties.map { $0.help() })
+            } else {
+                part.append("None")
             }
+            part.append("") // new line between each enums on verbose
         }
 
         return part.joined(separator: "\n")

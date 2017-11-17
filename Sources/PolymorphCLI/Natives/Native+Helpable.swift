@@ -16,6 +16,6 @@ extension Native: Helpable {
     }
 
     public func help(verbose: Bool) -> String {
-        return self.name
+        return self.name.bold
     }
 }

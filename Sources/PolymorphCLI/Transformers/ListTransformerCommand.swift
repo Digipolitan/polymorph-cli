@@ -29,6 +29,6 @@ public class ListTransformerCommand: Command {
         }
         let project = try ProjectStorage.open(at: file)
 
-        print(project.transformers.values.map { $0.help() }.joined(separator: "\n"))
+        print(project.transformers.values.map { $0.help(verbose: true) }.joined(separator: "\n"))
     }
 }

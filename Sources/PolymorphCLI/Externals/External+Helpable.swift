@@ -16,6 +16,6 @@ extension External: Helpable {
     }
 
     public func help(verbose: Bool) -> String {
-        return "\(self.name): \(self.type.rawValue)"
+        return "\(self.name.bold): \(self.type.rawValue.magenta)"
     }
 }
