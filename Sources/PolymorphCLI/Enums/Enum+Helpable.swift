@@ -18,18 +18,21 @@ extension Enum: Helpable {
     public func help(verbose: Bool) -> String {
         var part: [String] = []
 
-        part.append(self.canonicalName ?? self.name)
+        part.append((self.canonicalName ?? self.name).bold)
 
         if verbose {
             if let d = self.documentation {
                 part.append(d)
             }
+            part.append("Values:".underline)
             if self.values.count > 0 {
-                part.append("VALUES: ")
                 part.append(contentsOf: self.values.map { $0.help() })
+            } else {
+                part.append("None")
             }
+            part.append("") // new line between each enums on verbose
         }
 
-        return part.joined(separator: "\n\n")
+        return part.joined(separator: "\n")
     }
 }

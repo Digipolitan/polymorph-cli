@@ -46,15 +46,15 @@ public class ListClassCommand: Command {
         let project = try ProjectStorage.open(at: file)
 
         if let search = arguments[Keys.search] as? String {
-            print(project.models.searchClasses(matching: search).map { $0.help(verbose: verbose) }.joined(separator: "\n\n"))
+            print(project.models.searchClasses(matching: search).map { $0.help(verbose: verbose) }.joined(separator: "\n"))
         } else if let using = arguments[Keys.using] as? String {
             if let type = project.models.findClass(name: using) {
-                print(project.models.searchClasses(linkedTo: type.id).map { $0.help(verbose: verbose) }.joined(separator: "\n\n"))
+                print(project.models.searchClasses(linkedTo: type.id).map { $0.help(verbose: verbose) }.joined(separator: "\n"))
             } else {
                 throw PolymorphCLIError.classNotFound(name: using)
             }
         } else {
-            print(project.models.classes.values.map { $0.help(verbose: verbose) }.joined(separator: "\n\n"))
+            print(project.models.classes.values.map { $0.help(verbose: verbose) }.joined(separator: "\n"))
         }
     }
 }

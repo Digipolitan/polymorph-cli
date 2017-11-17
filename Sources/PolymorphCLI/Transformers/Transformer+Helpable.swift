@@ -16,22 +16,27 @@ extension Transformer: Helpable {
     }
 
     public func help(verbose: Bool) -> String {
-        var parts = ["- \(self.name)"]
+        var part: [String] = [self.name.bold]
 
-        let options = self.options.map {
-            var option = "  + \($0.name)"
-            if !$0.required {
-                option += "?"
+        if verbose {
+            part.append("Options:".underline)
+            if self.options.count > 0 {
+                part.append(contentsOf: self.options.map {
+                    var option = "\($0.name.green)"
+                    if !$0.required {
+                        option += "?".green
+                    }
+                    if let v = $0.value {
+                        option += " = \(v.red)"
+                    }
+                    return option
+                })
+            } else {
+                part.append("None")
             }
-            if let v = $0.value {
-                option += " = \(v)"
-            }
-            return option
-            }.joined(separator: "\n")
-        if options.count > 0 {
-            parts.append(options)
+            part.append("") // new line between each transfomers on verbose
         }
 
-        return parts.joined(separator: "\n")
+        return part.joined(separator: "\n")
     }
 }

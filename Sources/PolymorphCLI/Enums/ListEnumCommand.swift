@@ -46,10 +46,10 @@ public class ListEnumCommand: Command {
         let project = try ProjectStorage.open(at: file)
 
         if let search = arguments[Keys.search] as? String {
-            print(project.models.searchEnums(matching: search).map { $0.help(verbose: verbose) }.joined(separator: "\n\n"))
+            print(project.models.searchEnums(matching: search).map { $0.help(verbose: verbose) }.joined(separator: "\n"))
         } else if let using = arguments[Keys.using] as? String {
             if let type = project.models.findEnum(name: using) {
-                print(project.models.searchClasses(linkedTo: type.id).map { $0.help(verbose: verbose) }.joined(separator: "\n\n"))
+                print(project.models.searchClasses(linkedTo: type.id).map { $0.help(verbose: verbose) }.joined(separator: "\n"))
             } else {
                 throw PolymorphCLIError.enumNotFound(name: using)
             }
