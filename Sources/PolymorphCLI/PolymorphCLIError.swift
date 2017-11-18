@@ -20,6 +20,7 @@ public enum PolymorphCLIError: Error {
 
     case propertyExists(name: String)
     case propertyNotFound(name: String)
+    case propertySortInvalidIndex(value: Int, info: String)
 
     case enumExists(name: String)
     case enumNotFound(name: String)
@@ -34,4 +35,5 @@ public enum PolymorphCLIError: Error {
     case externalTypeInvalid(value: String, info: String)
     case externalNotFound(name: String)
 
+    case missingConditionalParameter(name: String)
 }

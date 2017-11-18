@@ -22,6 +22,7 @@ let propertyCommands = classCommands.add(child: ClassPropertyCommand())
 propertyCommands.add(child: ClassNewPropertyCommand())
 propertyCommands.add(child: ClassRemovePropertyCommand())
 propertyCommands.add(child: ClassUpdatePropertyCommand())
+propertyCommands.add(child: ClassSortPropertyCommand())
 
 let enumCommands = polymorph.add(child: EnumCommand())
 enumCommands.add(child: NewEnumCommand())

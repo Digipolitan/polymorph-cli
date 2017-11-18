@@ -1,0 +1,79 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "CodeWriter",
+        "repositoryURL": "https://github.com/Digipolitan/code-writer.git",
+        "state": {
+          "branch": null,
+          "revision": "6f8726371eafb0cddc8e984205f060d8efdb0736",
+          "version": "1.0.1"
+        }
+      },
+      {
+        "package": "CommandLineArgs",
+        "repositoryURL": "https://github.com/Digipolitan/command-line-args.git",
+        "state": {
+          "branch": null,
+          "revision": "09ee21ba5fcb3f8351baa3799de9b352baef3327",
+          "version": "1.0.2"
+        }
+      },
+      {
+        "package": "PolymorphCore",
+        "repositoryURL": "https://github.com/Digipolitan/polymorph-core.git",
+        "state": {
+          "branch": null,
+          "revision": "794ce5f2b0ff948dfc7c13dabb023dbae268aabc",
+          "version": "1.1.1"
+        }
+      },
+      {
+        "package": "PolymorphGen",
+        "repositoryURL": "https://github.com/Digipolitan/polymorph-gen.git",
+        "state": {
+          "branch": null,
+          "revision": "12e9940812cd710372e8cc42dd1e9f9469244a72",
+          "version": "1.0.2"
+        }
+      },
+      {
+        "package": "PolymorphSwiftGen",
+        "repositoryURL": "https://github.com/Digipolitan/polymorph-swift-gen.git",
+        "state": {
+          "branch": null,
+          "revision": "03ce45fbace1de475d4a2c8d5c8717066da383c6",
+          "version": "1.1.2"
+        }
+      },
+      {
+        "package": "Rainbow",
+        "repositoryURL": "https://github.com/onevcat/Rainbow.git",
+        "state": {
+          "branch": null,
+          "revision": "dfe579abc72347618e0ffde4faa36fa085c5f3bc",
+          "version": "3.0.0"
+        }
+      },
+      {
+        "package": "StringCase",
+        "repositoryURL": "https://github.com/Digipolitan/string-case-swift.git",
+        "state": {
+          "branch": null,
+          "revision": "64f681e4a08b4ca3540cc4144fe2a5152478b3db",
+          "version": "1.0.1"
+        }
+      },
+      {
+        "package": "SwiftCodeWriter",
+        "repositoryURL": "https://github.com/Digipolitan/swift-code-writer.git",
+        "state": {
+          "branch": null,
+          "revision": "ebe737fc11bd014eb9475e6630a22881a973e2c6",
+          "version": "1.0.2"
+        }
+      }
+    ]
+  },
+  "version": 1
+}
