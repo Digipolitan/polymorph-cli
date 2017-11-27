@@ -6,6 +6,7 @@ import PackageDescription
 let package = Package(
     name: "PolymorphCLI",
     dependencies: [
+        .package(url: "https://github.com/onevcat/Rainbow.git", .exact("3.0.0")),
         .package(url: "https://github.com/Digipolitan/command-line-args.git", from: "1.0.0"),
         .package(url: "https://github.com/Digipolitan/polymorph-swift-gen.git", from: "1.1.0")
         //.package(url: "https://github.com/Digipolitan/polymorph-android-gen.git", .branch("develop"))
