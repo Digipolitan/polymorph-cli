@@ -29,7 +29,7 @@ Download the artifact associated to the GitHub release and move it to `/usr/loca
 * With this follow curl command
 
 ```sh
-curl https://api.github.com/repos/Digipolitan/polymorph-cli/releases/latest | python -c "import sys, json; print json.load(sys.stdin)['assets'][0]['browser_download_url']" | xargs -I % curl -L % > /usr/local/bin/polymorph && chmod u+x /usr/local/bin/polymorph
+$ curl https://api.github.com/repos/Digipolitan/polymorph-cli/releases/latest | python -c "import sys, json; print json.load(sys.stdin)['assets'][0]['browser_download_url']" | xargs -I % curl -L % > /usr/local/bin/polymorph && chmod u+x /usr/local/bin/polymorph
 ```
 
 ## usage
